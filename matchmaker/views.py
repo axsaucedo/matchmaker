@@ -1,6 +1,14 @@
 from django.shortcuts import render
 from django.template import RequestContext
-from models import MatchUp, UserProfile
+from models import MatchUp, UserProfile, User
+from twilio.rest import TwilioRestClient
+
+
+# Twilio Settings
+account = "AC8f68f68ffac59fd5afc1a3317b1ffdf8"
+token = "5a556d4a9acf96753850c39111646ca4"
+client = TwilioRestClient(account, token)
+fromnumber = "+441279702159"
 
 def matchUpRequest(request):
     context = RequestContext(request)
@@ -36,9 +44,27 @@ def matchUpRequest(request):
                 matchup = MatchUp(match_maker=request.user, him=him, her=her, his_phone=his_phone, her_phone=her_phone)
                 matchup.save()
 
+                message = "Your friend " + request.user.first_name + " " + request.user.last_name + " has set you up on a blind date! Please access http://localhost:8000/matchups/" + str(matchup.id) + " to check it!"
+
+                his_sms = client.sms.messages.create(body=message,
+                                                    to=her_phone,
+                                                    from_=fromnumber)
+
+                her_sms = client.sms.messages.create(body=message,
+                                                    to=his_phone,
+                                                    from_=fromnumber)
+
+
     except:
         context['error'] = "Please check the form and try again."
 
 
     context['active'] = active
-    return render(request, 'matchup.html', context)
+    return render(request, 'matchup/matchup.html', context)
+
+def viewMatchUpRequest(request, matchid):
+    return render(request, 'accounts/profile.html', { 'user' : user })
+
+def viewProfile(request, username):
+    user = User.objects.get(username=username)
+    return render(request, 'accounts/profile.html', { 'user' : user })

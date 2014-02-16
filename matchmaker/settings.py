@@ -39,9 +39,10 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'social.apps.django_app.default',
-
     'matchmaker',
+
+    'social.apps.django_app.default',
+    'disqus',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -126,19 +127,18 @@ USE_L10N = True
 
 USE_TZ = True
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'static-serve').replace('\\', '/')
-# this should be prepended to your urls for static resources
-STATIC_URL = '/static/'
-# you can put static files which apply to your entire project here
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, "static").replace('\\', '/'),
-    )
-
-
-
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 #     # Allow all host headers
 ALLOWED_HOSTS = ['*']
 
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+# you can put static files which apply to your entire project here
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, "static").replace('\\', '/'),
+    )
+
+STATIC_ROOT = "matchmaker/static/"
+STATIC_URL = '/static/'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, "media").replace('\\', '/')
+MEDIA_URL = 'media/'

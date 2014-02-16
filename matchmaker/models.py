@@ -7,7 +7,7 @@ class UserProfile(models.Model):
     phone = models.CharField(max_length=13)
 
     def image_tag(self):
-        return u'<img src="%s" />' % self.profile_photo.url
+        return u'<img src="/%s" />' % self.profile_photo.url
     image_tag.short_description = 'Image'
     image_tag.allow_tags = True
 
