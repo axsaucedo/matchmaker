@@ -14,7 +14,7 @@ urlpatterns = patterns('',
 
     url(r'^$', TemplateView.as_view(template_name="matchup/home.html")),
     url(r'^matchup/$', views.matchUpRequest, name="matchup"),
-    url(r'^matchups/(?P<matchid>.+)/$', views.viewMatchUpRequest, name="matchup"),
+    url(r'^matchups/(?P<matchid>\d+)/$', views.viewMatchUpRequest, name="matchup"),
 
 
     url(r'^login/', TemplateView.as_view(template_name='accounts/login.html'), name='login'),

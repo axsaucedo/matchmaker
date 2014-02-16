@@ -63,12 +63,28 @@ def matchUpRequest(request):
     return render(request, 'matchup/matchup.html', context)
 
 def viewMatchUpRequest(request, matchid):
-    return render(request, 'accounts/profile.html', { 'user' : user })
+    context = RequestContext(request)
+
+    match = None
+
+    try:
+        match = MatchUp.objects.get(id=matchid)
+    except:
+        pass
+
+    context['match'] = match
+
+    return render(request, 'matchup/matchups.html', context)
 
 def viewProfile(request, username):
     context = RequestContext(request)
 
+    user = None
 
-    user = User.objects.get(username=username)
+    try:
+        user = User.objects.get(username=username)
+    except:
+        pass
+
     context['user'] = user
-    return render(request, 'accounts/profile.html', { 'user' : user })
+    return render(request, 'accounts/profile.html', context)
