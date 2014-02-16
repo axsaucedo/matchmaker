@@ -3,8 +3,8 @@ var home = {
         function parallax(){
             var scrolled = $(window).scrollTop();
 
-            $("#main-title").css("margin-left", 40+(scrolled*3));
-            $("#content").css("background-position", "0px " + scrolled + "px");
+            $("#main-title").css("margin-left", 40+(scrolled));
+            $("#content").css("background-position", "0px " + scrolled/22 + "px");
             console.log("0px " + scrolled + "px");
         }
 

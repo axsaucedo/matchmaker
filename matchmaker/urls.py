@@ -8,5 +8,10 @@ admin.autodiscover()
 urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
 
+    url(r'accounts/', include('social.apps.django_app.urls', namespace='social')),
+
     url(r'^$', TemplateView.as_view(template_name="home.html")),
+    url(r'^matchup/$', TemplateView.as_view(template_name="matchup.html")),
+
+    url(r'', TemplateView.as_view(template_name="404.html")),
 )

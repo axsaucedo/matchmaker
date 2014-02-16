@@ -60,6 +60,13 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'social.apps.django_app.context_processors.login_redirect',
 )
 
+AUTHENTICATION_BACKENDS = (
+    'social.backends.facebook.FacebookOAuth2',
+    #'userena.backends.UserenaAuthenticationBackend',
+    #'guardian.backends.ObjectPermissionBackend',
+    'django.contrib.auth.backends.ModelBackend',
+    )
+
 SOCIAL_AUTH_PIPELINE = (
     'social.pipeline.social_auth.social_details',
     'social.pipeline.social_auth.social_uid',
@@ -75,20 +82,12 @@ SOCIAL_AUTH_PIPELINE = (
     'auth_pipelines.pipelines.get_profile_avatar',  # custom
     )
 
-
-AUTHENTICATION_BACKENDS = (
-    'social.backends.facebook.FacebookOAuth2',
-    #'userena.backends.UserenaAuthenticationBackend',
-    #'guardian.backends.ObjectPermissionBackend',
-    'django.contrib.auth.backends.ModelBackend',
-    )
-
 ANONYMOUS_USER_ID = -1
 
 AUTH_PROFILE_MODULE = 'matchmaker.UserProfile'
 
-SOCIAL_AUTH_FACEBOOK_KEY              = '1424336717809838'
-SOCIAL_AUTH_FACEBOOK_SECRET          = 'f9ef96193c7f35151618744dc3da3624'
+SOCIAL_AUTH_FACEBOOK_KEY              = '249501395190918'
+SOCIAL_AUTH_FACEBOOK_SECRET          = 'd495906733abc31181b4d57073a0f7b2'
 
 SITE_ID=1
 
