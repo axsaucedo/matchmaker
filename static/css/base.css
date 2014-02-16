@@ -1,0 +1,29 @@
+@font-face
+{
+    font-family: CookieMonster;
+    src: url(/static/css/fonts/CookieMonster.ttf);
+}
+
+body {
+    font: CookieMonster;
+}
+
+img {
+    border: 20px;
+    border: 7px;
+    border-color: #000000;
+    border-style: inset;
+    margin: 40px;
+}
+
+h1 {
+    font-size: 2em;
+    margin: 0.67em 0;
+    position: relative;
+    top: 50px;
+    left: 40px;
+}
+
+.mainuserclass {
+	margin:20px;
+}

@@ -1,0 +1,21 @@
+#content {
+    background-image: url(/static/images/couples.jpg);
+    background-size: contain;
+    width: 100%;
+}
+
+section {
+    height: 100vh;
+    width: 100%;
+}
+
+#main-title {
+    padding-left: 50px;
+    margin-left: 40px;
+    font-size: 50px;
+    width: 400px;
+}
+
+h1:hover {
+    -webkit-transform: scale(1.1);
+}
