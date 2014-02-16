@@ -1,0 +1,59 @@
+{% extends "matchup/base.html" %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="row">
+                    <h1 class="page-header" style="color: white">Sign up</h1>
+                </div>
+                <h1 style="color: white">Please register to enjoy Sokar!</h1>
+            </div>
+ <body style="background-image:url(/media/road.jpeg); background-size:100%; background-repeat:norepeat;">
+            <div class="col-md-6">
+                <div class="well" style="margin-top: 50px">
+                    <form id="add-event-form" class="form-horizontal" method="POST">
+                        {% csrf_token %}
+                        <fieldset style="border: none;">
+                            <legend>Currently only <a id=">d-location-button" class="btn btn-primary" href='{% url "social:begin" "facebook"%}?next=/'>Facebook Login</a> available</legend>
+                            {% if form.errors %}
+                                <div class="alert alert-dismissable alert-danger">
+                                    Your username and password didn't match. Please try again.
+                                </div>
+                            {% endif %}
+                            <div class="form-group">
+                                <label for="add-event-form-name" class="col-md-3 control-label">Email</label>
+                                <div class="col-md-9">
+                                    <input id="add-event-form-name" name="username" class="form-control" type="text" placeholder="user@example.com" readonly>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="add-event-form-description" class="col-md-3 control-label">Password</label>
+                                <div class="col-md-9" style="padding-bottom: 20px;">
+                                    <input id="add-event-form-description" name="password" class="form-control" type="password" placeholder="Password" readonly>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="add-event-form-description" class="col-md-3 control-label">Repeat password</label>
+                                <div class="col-md-9" style="padding-bottom: 20px;">
+                                    <input id="add-event-form-description" name="password" class="form-control" type="password" placeholder="Repeated password"readonly>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-lg-10 col-lg-offset-5">
+                                    <button class="btn btn-primary" type="submit" value="login">Sign up</button>
+                                </div>
+                            </div>
+
+                            <input type="hidden" name="next" value="{% if request.GET.next %}{{ request.GET.next }}{% else %}/{% endif %}" />
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

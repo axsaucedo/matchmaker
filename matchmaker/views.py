@@ -66,5 +66,9 @@ def viewMatchUpRequest(request, matchid):
     return render(request, 'accounts/profile.html', { 'user' : user })
 
 def viewProfile(request, username):
+    context = RequestContext(request)
+
+
     user = User.objects.get(username=username)
+    context['user'] = user
     return render(request, 'accounts/profile.html', { 'user' : user })

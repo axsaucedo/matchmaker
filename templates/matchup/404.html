@@ -1,0 +1,19 @@
+{% extends "matchup/base.html" %}
+
+{% block head-includes %}
+    <style>
+        #content {
+            background-image: url(/static/images/404.jpg);
+            background-size: cover;
+            height: 100vh
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <section>
+        <div style="font-size: 100px; color: white; margin-left: 20px;">
+            404 - Not Found
+        </div>
+    </section>
+{% endblock %}
