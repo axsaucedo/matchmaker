@@ -1,0 +1,50 @@
+{% extends "matchup/base.html" %}
+{% load static %}
+{% block head-includes %}
+    <script src="http://api.mygeoposition.com/api/geopicker/api.js" type="text/javascript"></script>
+    <script type="text/javascript" src="/static/js/matchup.js"></script>
+    <style>
+        #content {
+            background-image: url(/static/images/couples.jpg);
+            background-size: cover;
+            height: 100vh;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+
+    <div class="container">
+
+        <div class="row">
+            <div style="margin-top: 50px; border-radius: 15px; background-color: rgba(0,0,0,0.5); height: 165px; padding: 20px 20px 20px 20px; color: white; font-size: 50px">Matcher: {{ match.match_maker.first_name }} {{ match.match_maker.last_name }}</div>
+        </div>
+        <div class="row" style="margin-top: -50px">
+            <div class="col-md-1-offset col-md-5">
+                <div class="row">
+                    <h1 class="page-header col-md-4" style="padding-left: 40px;">Him</h1>
+                </div>
+                <div class="row col-md-offset-1 col-md-8" style="margin-top: 50px;">
+                    <div style="border-radius: 15px; background-color: rgba(0,0,0,0.5); height: 65px; padding: 20px 20px 20px 20px; color: white">
+                        {% if not match.him_confirmed %}Not confirmed{% else %}Confirmed!{% endif %}
+                    </div>
+                </div>
+                <div>
+
+                </div>
+            </div>
+            <div class="col-md-1-offset col-md-5">
+                <div class="row">
+                    <h1 class="page-header col-md-4" style="padding-left: 40px;">Her</h1>
+                </div>
+                <div class="row col-md-offset-1 col-md-8" style="margin-top: 50px;">
+                    <div style="border-radius: 15px; background-color: rgba(0,0,0,0.5); height: 65px; padding: 20px 20px 20px 20px; color: white">
+                        {% if not match.her_confirmed %}Not confirmed{% else %}Confirmed!{% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
