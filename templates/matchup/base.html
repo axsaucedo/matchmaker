@@ -61,7 +61,7 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 {% if request.user.is_authenticated %}
-                    <li><a href="/matchup/">Find Match</a></li>
+                    <li><a href="/matchup/">Match My Friends</a></li>
                     <li><a href="/matchup/">My Dates</a></li>
                 {% else %}
                     <li><a id="find-location-button" class="btn btn-primary" href='{% url "social:begin" "facebook"%}?next=/'>Log In</a></li>

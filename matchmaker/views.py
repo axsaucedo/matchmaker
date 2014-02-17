@@ -54,6 +54,8 @@ def matchUpRequest(request):
                                                     to=his_phone,
                                                     from_=fromnumber)
 
+                active = matchup
+
 
     except:
         context['error'] = "Please check the form and try again."
@@ -70,7 +72,7 @@ def viewMatchUpRequest(request, matchid):
     try:
         match = MatchUp.objects.get(id=matchid)
     except:
-        pass
+        return render(request, 'matchup/404.html', context)
 
     context['match'] = match
 

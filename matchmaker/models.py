@@ -23,6 +23,9 @@ class MatchUp(models.Model):
     his_phone = models.CharField(max_length=13)
     her_phone = models.CharField(max_length=13)
 
+    him_confirmed = models.BooleanField(default=False)
+    her_confirmed = models.BooleanField(default=False)
+
     creation_date = models.DateTimeField(auto_now_add=True)
 
     in_progress = models.BooleanField(default=True)
