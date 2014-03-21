@@ -90,8 +90,10 @@ AUTH_PROFILE_MODULE = 'matchmaker.UserProfile'
 
 SOCIAL_AUTH_FACEBOOK_KEY              = '249501395190918'
 SOCIAL_AUTH_FACEBOOK_SECRET          = 'd495906733abc31181b4d57073a0f7b2'
+
 SOCIAL_AUTH_VK_OAUTH2_KEY = '4258143'
 SOCIAL_AUTH_VK_OAUTH2_SECRET = 'f3oQU7JdRBXxgemp0Phr'
+SOCIAL_AUTH_VK_OAUTH2_SCOPE = ['friends']
 
 SITE_ID=1
 
@@ -105,7 +107,7 @@ WSGI_APPLICATION = 'matchmaker.wsgi.application'
 PROJECT_PATH = os.path.realpath(os.path.dirname(__file__))
 TEMPLATE_DIRS = (
     os.path.join(PROJECT_PATH, '../', "templates"),
-    )
+)
 
 # Database
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
