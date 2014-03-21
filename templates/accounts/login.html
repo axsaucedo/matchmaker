@@ -16,6 +16,7 @@
                         {% csrf_token %}
                         <fieldset style="border: none;">
                             <legend>To login with Facebook click <a id="find-location-button" class="btn btn-primary" href='{% url "social:begin" "facebook"%}?next=/passenger/'>here</a></legend>
+                            <legend>To login with VK click <a id="find-location-button" class="btn btn-primary" href='{% url "social:begin" "vk-oauth2"%}?next=/passenger/'>here</a></legend>
                             {% if form.errors %}
                                 <div class="alert alert-dismissable alert-danger">
                                     Your username and password didn't match. Please try again.

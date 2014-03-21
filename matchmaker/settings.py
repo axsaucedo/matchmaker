@@ -63,6 +63,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 
 AUTHENTICATION_BACKENDS = (
     'social.backends.facebook.FacebookOAuth2',
+	 'social.backends.vk.VKOAuth2',
     #'userena.backends.UserenaAuthenticationBackend',
     #'guardian.backends.ObjectPermissionBackend',
     'django.contrib.auth.backends.ModelBackend',
@@ -89,6 +90,8 @@ AUTH_PROFILE_MODULE = 'matchmaker.UserProfile'
 
 SOCIAL_AUTH_FACEBOOK_KEY              = '249501395190918'
 SOCIAL_AUTH_FACEBOOK_SECRET          = 'd495906733abc31181b4d57073a0f7b2'
+SOCIAL_AUTH_VK_OAUTH2_KEY = '4258143'
+SOCIAL_AUTH_VK_OAUTH2_SECRET = 'f3oQU7JdRBXxgemp0Phr'
 
 SITE_ID=1
 
