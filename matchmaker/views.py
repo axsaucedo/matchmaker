@@ -53,13 +53,13 @@ def matchUpRequest(request):
 
             message = "Your friend " + request.user.first_name + " " + request.user.last_name + " has set you up on a blind date! Please access http://localhost:8000/matchups/" + str(matchup.id) + " to check it!"
 
-#                his_sms = client.sms.messages.create(body=message,
-#                                                    to=her_phone,
-#                                                    from_=fromnumber)
-#
-#                her_sms = client.sms.messages.create(body=message,
-#                                                    to=his_phone,
-#                                                    from_=fromnumber)
+            his_sms = client.sms.messages.create(body=message,
+                                                to=her_phone,
+                                                from_=fromnumber)
+
+            her_sms = client.sms.messages.create(body=message,
+                                                to=his_phone,
+                                                from_=fromnumber)
 
             print "Emails sent"
             print matchup.pk
