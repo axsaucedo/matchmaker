@@ -3,7 +3,7 @@ from django.db import models
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User)
-    profile_photo = models.ImageField(upload_to='profiles/', blank=True, null=True)
+    profile_photo = models.ImageField(upload_to='profiles/', default="profiles/placeholder.jpg")
     phone = models.CharField(max_length=13)
 
     def image_tag(self):

@@ -27,3 +27,7 @@ h1 {
 .mainuserclass {
 	margin:20px;
 }
+
+.profilepicture img {
+    width: 200px;
+}
