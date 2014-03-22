@@ -3,11 +3,11 @@ from django.db import models
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User)
-    profile_photo = models.ImageField(upload_to='profiles/', default="profiles/placeholder.jpg")
+    profile_photo = models.ImageField(upload_to='profiles/')
     phone = models.CharField(max_length=13)
 
     def image_tag(self):
-        return u'<img src="/%s" />' % self.profile_photo.url
+        return u'<img src="/%s" />' % (self.profile_photo.url if self.profile_photo else 'media/profiles/placeholder.jpg')
     image_tag.short_description = 'Image'
     image_tag.allow_tags = True
 

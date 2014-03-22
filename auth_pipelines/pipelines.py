@@ -24,8 +24,8 @@ def get_profile_data(backend, details, response,
         #     date_format = "%m/%d/%Y"
         #     profile.birthday = datetime.strptime(datestring, date_format)
 
-        profile.save()
-        user.save()
+    profile.save()
+    user.save()
 
 
 def get_profile_avatar(backend, details, response,
