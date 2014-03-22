@@ -9,18 +9,47 @@
             background-size: cover;
             height: 100vh;
         }
+        #map-frame {
+            position: absolute;
+            left: 0px;
+            color: black;
+            width: 100%;
+            height:100%;
+        }
     </style>
 {% endblock %}
 
 {% block content %}
 
     <div class="container">
-
         <div class="row">
-            <div style="margin-top: 50px; border-radius: 15px; background-color: rgba(0,0,0,0.5); height: 165px; padding: 20px 20px 20px 20px; color: white; font-size: 50px">Matcher: {{ match.match_maker.first_name }} {{ match.match_maker.last_name }}</div>
+            <div id="map-frame">
+                <div id="map" style="width: 100%;height:100%"></div>
+            </div>
         </div>
-        <div class="row" style="margin-top: -50px">
-            <div class="col-md-1-offset col-md-5">
+        <div class="row" style="margin-top: 50px; height: 165px;">
+            <div class="col-md-8">
+                <div style="width: 100%; z-index: 100; border-radius: 15px; background-color: rgba(0,0,0,0.5); padding: 20px 20px 20px 20px; color: white;">
+                    <div style="font-size: 40px;">
+                        Matcher: {{ match.match_maker.first_name }} {{ match.match_maker.last_name }}
+                    </div>
+                    <br>
+                    <div style="font-size: 20px;">
+                        Address: {{ match.address }}
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div>
+                    <textarea type="text" placeholder="How to identify me when we meet? Blue Shirt, Red Trousers, White Dress, Blue Purse" style="border-radius: 15px; padding: 10px 10px 10px 10px; width: 100%;"></textarea>
+                </div>
+                <div class="btn btn-danger" style="border-radius: 15px; width: 100%; height: 100%; margin-top: 10px;">
+                    Confirm
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-offset-1 col-md-5">
                 <div class="row">
                     <h1 class="page-header col-md-4" style="padding-left: 40px;">Him</h1>
                 </div>
@@ -29,11 +58,8 @@
                         {% if not match.him_confirmed %}Not confirmed{% else %}Confirmed!{% endif %}
                     </div>
                 </div>
-                <div>
-
-                </div>
             </div>
-            <div class="col-md-1-offset col-md-5">
+            <div class="col-md-offset-1 col-md-5">
                 <div class="row">
                     <h1 class="page-header col-md-4" style="padding-left: 40px;">Her</h1>
                 </div>
@@ -45,6 +71,14 @@
             </div>
         </div>
     </div>
+    <script type='text/javascript'>
+        $('#map').gmap().bind('init', function(ev, map) {
+            $('#map').gmap('addMarker', {'position': '{{ match.latitude }},{{ match.longitude }}', 'bounds': true}).click(function() {
+                $('#map').gmap('openInfoWindow', {'content': '{{ match.address }}' }, this);
+            });
+            $('#map').gmap('option', 'zoom', 15);
+        });
+    </script>
 {% endblock %}
 
 

@@ -23,6 +23,7 @@ def matchUpRequest(request):
             her_phone = post['herphone']
             lat = post['lat']
             long = post['long']
+            address = post['address']
 
             him_pass = random.randrange(9999)
             her_pass = random.randrange(9999)
@@ -46,7 +47,8 @@ def matchUpRequest(request):
                                 , his_phone=his_phone
                                 , her_phone=her_phone
                                 , latitude=lat
-                                , longitude=long)
+                                , longitude=long
+                                , address=address)
             matchup.save()
 
             message = "Your friend " + request.user.first_name + " " + request.user.last_name + " has set you up on a blind date! Please access http://localhost:8000/matchups/" + str(matchup.id) + " to check it!"

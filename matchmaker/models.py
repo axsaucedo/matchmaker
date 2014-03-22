@@ -17,6 +17,8 @@ class UserProfile(models.Model):
 class MatchUp(models.Model):
     match_maker = models.ForeignKey(User, related_name="match_maker_matchup")
 
+    address = models.CharField(max_length=100)
+
     him = models.ForeignKey(User, related_name="him_matchup", null=True, blank=True)
     her = models.ForeignKey(User, related_name="her_matchup", null=True, blank=True)
 
