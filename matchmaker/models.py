@@ -15,16 +15,19 @@ class UserProfile(models.Model):
         return "%s's profile" % self.user
 
 class MatchUp(models.Model):
-    match_maker = models.OneToOneField(User, related_name="match_maker_matchup")
+    match_maker = models.ForeignKey(User, related_name="match_maker_matchup")
 
-    him = models.OneToOneField(User, related_name="him_matchup", null=True, blank=True)
-    her = models.OneToOneField(User, related_name="her_matchup", null=True, blank=True)
+    him = models.ForeignKey(User, related_name="him_matchup", null=True, blank=True)
+    her = models.ForeignKey(User, related_name="her_matchup", null=True, blank=True)
 
     his_phone = models.CharField(max_length=13)
     her_phone = models.CharField(max_length=13)
 
     him_confirmed = models.BooleanField(default=False)
     her_confirmed = models.BooleanField(default=False)
+
+    latitude = models.FloatField()
+    longitude = models.FloatField()
 
     creation_date = models.DateTimeField(auto_now_add=True)
 
