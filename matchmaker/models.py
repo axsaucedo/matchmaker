@@ -19,6 +19,8 @@ class MatchUp(models.Model):
 
     address = models.CharField(max_length=100)
 
+    date_date = models.DateTimeField()
+
     him = models.ForeignKey(User, related_name="him_matchup", null=True, blank=True)
     her = models.ForeignKey(User, related_name="her_matchup", null=True, blank=True)
 

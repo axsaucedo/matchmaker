@@ -5,6 +5,7 @@ from django.shortcuts import redirect
 
 from twilio.rest import TwilioRestClient
 import random
+import datetime
 
 
 # Twilio Settings
@@ -24,6 +25,9 @@ def matchUpRequest(request):
             lat = post['lat']
             long = post['long']
             address = post['address']
+            date_date = datetime.strptime(post['date-date'], '%d/%m/%Y %H:%M:%S')
+
+            print date_date
 
             him_pass = random.randrange(9999)
             her_pass = random.randrange(9999)
@@ -48,18 +52,19 @@ def matchUpRequest(request):
                                 , her_phone=her_phone
                                 , latitude=lat
                                 , longitude=long
-                                , address=address)
+                                , address=address
+                                , date_date=date_date)
             matchup.save()
 
             message = "Your friend " + request.user.first_name + " " + request.user.last_name + " has set you up on a blind date! Please access http://localhost:8000/matchups/" + str(matchup.id) + " to check it!"
 
-            his_sms = client.sms.messages.create(body=message,
-                                                to=her_phone,
-                                                from_=fromnumber)
-
-            her_sms = client.sms.messages.create(body=message,
-                                                to=his_phone,
-                                                from_=fromnumber)
+#            his_sms = client.sms.messages.create(body=message,
+#                                                to=her_phone,
+#                                                from_=fromnumber)
+#
+#            her_sms = client.sms.messages.create(body=message,
+#                                                to=his_phone,
+#                                                from_=fromnumber)
 
             print "Emails sent"
             print matchup.pk
