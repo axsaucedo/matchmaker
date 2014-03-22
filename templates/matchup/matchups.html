@@ -20,7 +20,7 @@
 {% endblock %}
 
 {% block content %}
-
+    <div id="matchups-info" data-toggle_confirm_date_url="{% url 'confirm_date' %}"></div>
     <div class="container">
         <div class="row">
             <div id="map-frame">
@@ -28,32 +28,89 @@
             </div>
         </div>
         <div class="row" style="margin-top: 50px; height: 165px;">
-            <div class="col-md-8">
-                <div style="width: 100%; z-index: 100; border-radius: 15px; background-color: rgba(0,0,0,0.5); padding: 20px 20px 20px 20px; color: white;">
-                    <div style="font-size: 40px;">
-                        Matcher: {{ match.match_maker.first_name }} {{ match.match_maker.last_name }}
+            {% if matcher %}
+                <div class="col-md-12">
+                    <div style="width: 100%; z-index: 100; border-radius: 15px; background-color: rgba(0,0,0,0.5); padding: 20px 20px 20px 20px; color: white;">
+                        <div style="font-size: 40px;">
+                            Matcher: You
+                        </div>
+                        <br>
+                        <div style="font-size: 20px;">
+                            Address: {{ match.address }}
+                        </div>
                     </div>
-                    <br>
-                    <div style="font-size: 20px;">
-                        Address: {{ match.address }}
+                </div>
+            {% else %}
+                <div class="col-md-8">
+                    <div style="width: 100%; z-index: 100; border-radius: 15px; background-color: rgba(0,0,0,0.5); padding: 20px 20px 20px 20px; color: white;">
+                        <div style="font-size: 40px;">
+                            Matcher: {{ match.match_maker.first_name }} {{ match.match_maker.last_name }}
+                        </div>
+                        <br>
+                        <div style="font-size: 20px;">
+                            Matcher Phone Number: {{  match.match_maker.profile.phone }}
+                            <br>
+                            Address: {{ match.address }}
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-4">
-                <div>
-                    <textarea type="text" placeholder="How to identify me when we meet? Blue Shirt, Red Trousers, White Dress, Blue Purse" style="border-radius: 15px; padding: 10px 10px 10px 10px; width: 100%;"></textarea>
+                <div id="confirm-container" class="col-md-4">
+                    {% if not you_confirmed %}
+                        <div><textarea type="text" id="meetup-details" placeholder="How to identify me when we meet? Blue Shirt, Red Trousers, White Dress, Blue Purse" style="border-radius: 15px; padding: 10px 10px 10px 10px; width: 100%;"></textarea></div>
+                    {% endif %}
+                    <div id="confirm-btn" class="btn {% if you_confirmed %}btn-danger{% else %}btn-success{% endif %}" style="border-radius: 15px; width: 100%; height: 100%; margin-top: 10px;">
+                        {% if you_confirmed %}Cancel{% else %}Confirm{% endif %}
+                    </div>
                 </div>
-                <div class="btn btn-danger" style="border-radius: 15px; width: 100%; height: 100%; margin-top: 10px;">
-                    Confirm
-                </div>
-            </div>
+                <script>
+                    matchups = $("#matchups-info");
+                    console.log(matchups.attr("data-confirm_date_url"));
+                    confirm_btn = $("#confirm-btn");
+                    confirm_container = $("#confirm-container");
+
+                    confirm_btn.click(function() {
+                        console.log("click")
+                        $.ajax({
+                            url: matchups.attr("data-toggle_confirm_date_url"),
+                            dataType: "json",
+                            type: "POST",
+                            data: {
+                                  matchup: {{ match.id }}
+                            },
+                            success : function(res) {
+                                if (!res.error) {
+                                    console.log(res);
+                                    if(res.confirmed === true) {
+                                        confirm_btn.removeClass("btn-success");
+                                        confirm_btn.addClass("btn-danger");
+                                        confirm_btn.html("Cancel");
+
+                                        text = confirm_container.val();
+                                        $("#left-partner-confirmed").html("<h3>Confirmed!</h3><br>"+text);
+
+                                        confirm_container.find('div').first().remove();
+                                    } else {
+                                        confirm_btn.removeClass("btn-danger");
+                                        confirm_btn.addClass("btn-success");
+                                        confirm_btn.html("Confirm");
+
+                                        confirm_container.prepend('<div><textarea type="text" id="meetup-details" placeholder="How to identify me when we meet? Blue Shirt, Red Trousers, White Dress, Blue Purse" style="border-radius: 15px; padding: 10px 10px 10px 10px; width: 100%;"></textarea></div>');
+
+                                        $("#left-partner-confirmed").html("Not confirmed...");
+                                    }
+                                }
+                            }
+                        });
+                    });
+                </script>
+            {% endif %}
         </div>
         <div class="row">
             <div class="col-md-offset-1 col-md-5">
                 <div class="row">
-                    <h1 class="page-header col-md-4" style="padding-left: 40px;">Him</h1>
+                    <h1 class="page-header col-md-4" style="padding-left: 40px;">{% if matcher %}Him{% else %}You{% endif %}</h1>
                 </div>
-                <div class="row col-md-offset-1 col-md-8" style="margin-top: 50px;">
+                <div id="left-partner-confirmed" class="row col-md-offset-1 col-md-8" style="margin-top: 50px;">
                     <div style="border-radius: 15px; background-color: rgba(0,0,0,0.5); height: 65px; padding: 20px 20px 20px 20px; color: white">
                         {% if not match.him_confirmed %}Not confirmed{% else %}Confirmed!{% endif %}
                     </div>
@@ -61,9 +118,9 @@
             </div>
             <div class="col-md-offset-1 col-md-5">
                 <div class="row">
-                    <h1 class="page-header col-md-4" style="padding-left: 40px;">Her</h1>
+                    <h1 class="page-header col-md-4" style="padding-left: 40px;">{% if matcher %}Her{% else %}Partner{% endif %}</h1>
                 </div>
-                <div class="row col-md-offset-1 col-md-8" style="margin-top: 50px;">
+                <div id="right-partner-confirmed" class="row col-md-offset-1 col-md-8" style="margin-top: 50px;">
                     <div style="border-radius: 15px; background-color: rgba(0,0,0,0.5); height: 65px; padding: 20px 20px 20px 20px; color: white">
                         {% if not match.her_confirmed %}Not confirmed{% else %}Confirmed!{% endif %}
                     </div>

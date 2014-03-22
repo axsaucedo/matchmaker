@@ -2,10 +2,12 @@ from django.shortcuts import render
 from django.template import RequestContext
 from models import MatchUp, UserProfile, User
 from django.shortcuts import redirect
+from django.contrib.auth import authenticate, login
 
 from twilio.rest import TwilioRestClient
 import random
 from datetime import datetime
+from matchmaker.settings import BASE_URL
 
 from pytz import timezone
 import pytz
@@ -42,25 +44,22 @@ def matchUpRequest(request):
             try:
                 him = UserProfile.objects.get(phone=his_phone)
             except:
-                u_him = User.objects.create(username=his_phone.replace('+',''), password=him_pass)
+                print his_phone.replace('+','')
+                print str(him_pass)
+                u_him = User.objects.create_user(username=his_phone.replace('+',''), password=str(him_pass))
+                u_him.save()
                 him = UserProfile.objects.create(user=u_him, phone=his_phone)
             try:
                 her = UserProfile.objects.get(phone=her_phone)
             except:
-                u_her = User.objects.create(username=her_phone.replace('+',''), password=her_pass)
+                print her_phone.replace('+','')
+                print str(her_pass)
+                u_her = User.objects.create_user(username=her_phone.replace('+',''), password=str(her_pass))
+                u_her.save()
                 her = UserProfile.objects.create(user=u_her, phone=her_phone)
 
             print him
             print her
-            print ( request.user
-            , him.user
-            , her.user
-            , his_phone
-            , her_phone
-            , lat
-            , long
-            , address
-            , date_date)
 
             matchup = MatchUp(    match_maker=request.user
                                 , him=him.user
@@ -71,23 +70,24 @@ def matchUpRequest(request):
                                 , longitude=long
                                 , address=address
                                 , date_date=date_date)
+
             matchup.save()
 
 
-            message = "Your friend " + request.user.first_name + " " + request.user.last_name + " has set you up on a blind date! Please access http://localhost:8000/matchups/" + str(matchup.id) + " to check it!"
+            print request.user.first_name,  request.user.last_name, BASE_URL, matchup.id, str(him_pass)
+            message_him = "Your friend " + request.user.first_name + " " + request.user.last_name + " has set you up on a blind date! Please access "+BASE_URL+"matchups/" + str(matchup.id) + "/?uname="+his_phone.replace('+','')+"&pass="+str(him_pass)+" to check it! Your current username is "+his_phone+" and your password is "+str(him_pass)+"."
+            message_her = "Your friend " + request.user.first_name + " " + request.user.last_name + " has set you up on a blind date! Please access "+BASE_URL+"matchups/" + str(matchup.id) + "/?uname="+her_phone.replace('+','')+"&pass="+str(her_pass)+" to check it! Your current username is "+her_phone+" and your password is "+str(her_pass)+"."
 
-#            his_sms = client.sms.messages.create(body=message,
-#                                                to=her_phone,
-#                                                from_=fromnumber)
-#
-#            her_sms = client.sms.messages.create(body=message,
+            print message_him
+            print message_her
+
+#            his_sms = client.sms.messages.create(body=message_him,
 #                                                to=his_phone,
 #                                                from_=fromnumber)
-
-            print "Emails sent"
-            print matchup.pk
-            print '/matchups/' + str(matchup.pk) + '/'
-
+#
+#            her_sms = client.sms.messages.create(body=message_her,
+#                                                to=her_phone,
+#                                                from_=fromnumber)
 
             return redirect('/matchups/' + str(matchup.pk) + '/')
 
@@ -96,6 +96,10 @@ def matchUpRequest(request):
         context['error'] = "Please check the form and try again."
 
     return render(request, 'matchup/matchup.html', context)
+
+def saveNumber(request):
+    context = RequestContext(request)
+    return render(request, 'matchup/phone_input.html', context)
 
 def viewMatchUpRequest(request, matchid):
     context = RequestContext(request)
@@ -107,7 +111,38 @@ def viewMatchUpRequest(request, matchid):
     except:
         return render(request, 'matchup/404.html', context)
 
+    get = request.GET
+    username = get.get('uname')
+    password = get.get('pass')
+
+    if request.method == 'GET' and username and password:
+
+        print username, password
+        user = authenticate(username=username, password=password)
+        print user
+
+        if user == None: return redirect('/signup/')
+
+        login(request, user)
+
+        you = match.him
+        you_confirmed = match.him_confirmed
+        partner = match.her
+        partner_confirmed = match.her_confirmed
+
+        if not user == you:
+            partner = match.him
+            partner_confirmed = match.him_confirmed
+            you = match.her
+            you_confirmed = match.her_confirmed
+
+        context['you'] = you
+        context['you_confirmed'] = you_confirmed
+        context['partner'] = partner
+        context['partner_confirmed'] = partner_confirmed
+
     context['match'] = match
+    context['matcher'] = match.match_maker == request.user
 
     return render(request, 'matchup/matchups.html', context)
 

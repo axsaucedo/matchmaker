@@ -13,26 +13,76 @@
         .bootstrap-datetimepicker-widget {
             margin-top: -320px;
         }
+        .discount-box {
+            margin: 15px 15px 15px 15px;
+            height: 100px;
+            width: 110px;
+            float: left;
+            border-radius: 15px;
+            position: relative;
+        }
+        .discount-box img {
+            width: 100%;
+        }
+        .discount-box div {
+            position: absolute;
+            bottom: 0px;
+            background: transparent;
+            color: transparent;
+            border-radius: 15px;
+            width: 80%;
+            left: 5%;
+            font-size: 10px;
+            padding: 10px 10px 10px 10px;
+        }
+        .discount-box:hover > div {
+            background: rgba(0,0,0,0.5);
+            color: white;
+        }
     </style>
 {% endblock %}
 
 {% block content %}
-
     <div class="container">
         <div class="row">
-            <div class="col-md-6">
-                <div class="row">
-                    <h1 class="page-header">Match your friends!</h1>
+            <div class="col-md-5">
+
+                <div class="row" style="margin-top: -30px">
+                    <section>
+                        <h1 id="main-title">Match your friends!</h1>
+                    </section>
+                    <h1 class="page-header">Take them on an adventure!</h1>
                 </div>
-                <div class="row well">
-                    <div class="col-md-2">Mc Donnald's</div>
-                    <div class="col-md-2">Mc Donnald's</div>
-                    <div class="col-md-2">Mc Donnald's</div>
-                    <div class="col-md-2">Mc Donnald's</div>
+                <div class="row well" style="padding-top: 50px">
+                    <a href="#">
+                        <div class="discount-box" style="background: url(/static/images/1.jpg); background-size: cover; background-position: center;">
+                            <div>5 zvyozd cinema</div>
+                        </div>
+                    </a>
+                    <a href="#">
+                        <div class="discount-box" style="background: url(/static/images/2.jpg); background-size: cover; background-position: center;">
+                            <div>Evropeyskiy mall. Moscow, Kievskogo Vokzala  sqare, 2</div>
+                        </div>
+                    </a>
+                    <a href="#">
+                        <div class="discount-box" style="background: url(/static/images/3.jpg); background-size: cover; background-position: center;">
+                            <div>Gorky Park. Moscow, Krymskiy Val str., 9</div>
+                        </div>
+                    </a>
+                    <a href="#">
+                        <div class="discount-box" style="background: url(/static/images/4.gif); background-size: cover; background-position: center;">
+                            <div>GUM mall. Moscow, Red Square, 3</div>
+                        </div>
+                    </a>
+                    <a href="#">
+                        <div class="discount-box" style="background: url(/static/images/5.jpg); background-size: cover; background-position: center;">
+                            <div>Okhotny Ryad mall. Moscow, Manezhnaya sqare, 1 bld 2</div>
+                        </div>
+                    </a>
                 </div>
 
             </div>
-            <div class="col-md-6">
+            <div class="col-md-6 col-md-offset-1">
                 <br>
                 <div id="passenger-form-container" class="well">
                     <form id="passenger-form" class="form-horizontal" method="POST">

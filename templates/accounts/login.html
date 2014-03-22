@@ -1,13 +1,14 @@
 {% extends "matchup/base.html" %}
 
 {% block content %}
+    {% load url from future %}
     <div class="container">
         <div class="row"class="col-md-6" >
             <div class="col-md-6" >
                 <div class="row">
                     <h1 class="page-header" style="color: white;">Log In</h1>
                 </div>
-                <h1 style="color: white;">Please log in to enjoy Sokar!</h1>
+                <h1 style="color: white;">Please log in to enjoy MatchMaker!</h1>
             </div>
             <body style="background-image:url(/media/clear.png); background-size:100%; background-repeat:norepeat;">
             <div class="col-md-6">
@@ -42,7 +43,7 @@
                                 </div>
                             </div>
 
-                            <input type="hidden" name="next" value="{% if request.GET.next %}{{ request.GET.next }}{% else %}/{% endif %}" />
+                            <input type="hidden" name="next" value="{% url 'django.contrib.auth.views.login' %}?next={% if request.GET.next %}{{ request.GET.next }}{% else %}/{% endif %}" />
                         </fieldset>
                     </form>
                 </div>
