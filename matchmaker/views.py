@@ -5,7 +5,10 @@ from django.shortcuts import redirect
 
 from twilio.rest import TwilioRestClient
 import random
-import datetime
+from datetime import datetime
+
+from pytz import timezone
+import pytz
 
 
 # Twilio Settings
@@ -25,7 +28,12 @@ def matchUpRequest(request):
             lat = post['lat']
             long = post['long']
             address = post['address']
+
+            print post['date-date']
+            print datetime.strptime(post['date-date'], '%d/%m/%Y %H:%M:%S')
+
             date_date = datetime.strptime(post['date-date'], '%d/%m/%Y %H:%M:%S')
+            date_date = timezone('UTC').localize(date_date)
 
             print date_date
 
@@ -44,6 +52,15 @@ def matchUpRequest(request):
 
             print him
             print her
+            print ( request.user
+            , him.user
+            , her.user
+            , his_phone
+            , her_phone
+            , lat
+            , long
+            , address
+            , date_date)
 
             matchup = MatchUp(    match_maker=request.user
                                 , him=him.user
@@ -55,6 +72,7 @@ def matchUpRequest(request):
                                 , address=address
                                 , date_date=date_date)
             matchup.save()
+
 
             message = "Your friend " + request.user.first_name + " " + request.user.last_name + " has set you up on a blind date! Please access http://localhost:8000/matchups/" + str(matchup.id) + " to check it!"
 
