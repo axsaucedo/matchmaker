@@ -73,21 +73,22 @@ def matchUpRequest(request):
 
             matchup.save()
 
-
-            print request.user.first_name,  request.user.last_name, BASE_URL, matchup.id, str(him_pass)
-            message_him = "Your friend " + request.user.first_name + " " + request.user.last_name + " has set you up on a blind date! Please access "+BASE_URL+"matchups/" + str(matchup.id) + "/?uname="+his_phone.replace('+','')+"&pass="+str(him_pass)+" to check it! Your current username is "+his_phone+" and your password is "+str(him_pass)+"."
-            message_her = "Your friend " + request.user.first_name + " " + request.user.last_name + " has set you up on a blind date! Please access "+BASE_URL+"matchups/" + str(matchup.id) + "/?uname="+her_phone.replace('+','')+"&pass="+str(her_pass)+" to check it! Your current username is "+her_phone+" and your password is "+str(her_pass)+"."
+            message_him = "Your friend " + request.user.first_name + " " + request.user.last_name + " has set you up on a blind date! Please access "+BASE_URL+"matchups/" + str(matchup.id) + "/?uname="+his_phone.replace('+','')+"&pass="+str(him_pass)+" to check it!"
+            message_her = "Your friend " + request.user.first_name + " " + request.user.last_name + " has set you up on a blind date! Please access "+BASE_URL+"matchups/" + str(matchup.id) + "/?uname="+her_phone.replace('+','')+"&pass="+str(her_pass)+" to check it!"
 
             print message_him
             print message_her
 
-#            his_sms = client.sms.messages.create(body=message_him,
-#                                                to=his_phone,
-#                                                from_=fromnumber)
-#
-#            her_sms = client.sms.messages.create(body=message_her,
-#                                                to=her_phone,
-#                                                from_=fromnumber)
+            try:
+                his_sms = client.sms.messages.create(body=message_him,
+                                                    to=his_phone,
+                                                    from_=fromnumber)
+
+                her_sms = client.sms.messages.create(body=message_her,
+                                                    to=her_phone,
+                                                    from_=fromnumber)
+            except Exception as e:
+                print str(e)
 
             return redirect('/matchups/' + str(matchup.pk) + '/')
 
